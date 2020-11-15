@@ -169,9 +169,13 @@ namespace BlazorApp2.Pages
         {
             if (weeklyFormat != "")
                 weeklyFormat = "";
-          
+
+            if (multipleDays.Count() != 0)
+            {
                 var cron = CronExpression.EverySpecificWeekDayAt(hour, complexMinutes, multipleDays.ToArray());
                 weeklyFormat = cron.ToString();
+            }
+          
             
         
         }
