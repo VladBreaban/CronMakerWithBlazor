@@ -170,9 +170,9 @@ namespace BlazorApp2
             var ce = new CronExpression(minutesInteval, CronExpressionType.EveryNMinutes);
             return ce;
         }
-        public static CronExpression EveryNWeek(int weekInteval)
+        public static CronExpression EveryNMonth(int monthInteval)
         {
-            var ce = new CronExpression(weekInteval, CronExpressionType.EveryNWeek);
+            var ce = new CronExpression(monthInteval, CronExpressionType.EveryNWeek);
             return ce;
         }
 

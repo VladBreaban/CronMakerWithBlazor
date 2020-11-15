@@ -169,16 +169,10 @@ namespace BlazorApp2.Pages
         {
             if (weeklyFormat != "")
                 weeklyFormat = "";
-            if(complexMonth==true)
-            {
-                var cron = CronExpression.EveryNWeek(day);
-                weeklyFormat = cron.ToString();
-            }
-            else
-            {
+          
                 var cron = CronExpression.EverySpecificWeekDayAt(hour, complexMinutes, multipleDays.ToArray());
                 weeklyFormat = cron.ToString();
-            }
+            
         
         }
 
@@ -186,8 +180,17 @@ namespace BlazorApp2.Pages
         {
             if (monthlyFormat != "")
                 monthlyFormat = "";
-            var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, hour, complexMinutes);
-            monthlyFormat = cron;
+            if(complexMonth==true)
+            {
+                var cron = CronExpression.EveryNMonth(day);
+                monthlyFormat = cron;
+            }
+            else
+            {
+                var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, hour, complexMinutes);
+                monthlyFormat = cron;
+            }
+           
 
         }
     }
