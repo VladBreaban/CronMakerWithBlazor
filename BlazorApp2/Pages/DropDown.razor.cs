@@ -168,7 +168,7 @@ namespace BlazorApp2.Pages
 
         public async Task generatemonthlyCron(MouseEventArgs args)
         {
-            var cron2=CronExpression.EveryMon
+       
             var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, hour, complexMinutes);
             monthlyFormat = cron;
 
