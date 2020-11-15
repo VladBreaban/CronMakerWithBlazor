@@ -70,9 +70,12 @@ namespace BlazorApp2.Pages
         public int complexMinutes = 00;
         public bool CheckBoxeveryday = true;
         public bool CheckBoxeveryweekday = false;
+        public bool complexMonth = true;
+        public bool complexMonth2 = false;
         public int[] months = new int[] { };
         public List<codedDecoded> forWeeklyCron = new List<codedDecoded>();
-       
+        public bool isDisabled1 = true;
+        public bool isDisabled2 =false;
         public int month=1;
         public string[] dayoftheWeek = new string[] {"Monday", "Tuesday","Wednesday", "Thursday", "Friday","Saturday","Sunday"};
         IEnumerable<string> multipleDays = new string[] {  };
@@ -130,6 +133,8 @@ namespace BlazorApp2.Pages
 
         public async Task generateMinuteCron(MouseEventArgs args)
         {
+            if (minuteFormat != "")
+                minuteFormat = "";
             var ce1 = CronExpression.EveryNMinutes(minutes);
             minuteFormat = ce1.ToString();
         }
@@ -143,6 +148,8 @@ namespace BlazorApp2.Pages
        
         public async Task generatedailyCron(MouseEventArgs args)
         {
+            if (dailyFormat != "")
+                dailyFormat = "";
             if(CheckBoxeveryday==true)
             {
               
@@ -160,15 +167,25 @@ namespace BlazorApp2.Pages
 
         public async Task generateweeklyCron(MouseEventArgs args)
         {
-          
+            if (weeklyFormat != "")
+                weeklyFormat = "";
+            if(complexMonth==true)
+            {
+                var cron = CronExpression.EveryNWeek(day);
+                weeklyFormat = cron.ToString();
+            }
+            else
+            {
+                var cron = CronExpression.EverySpecificWeekDayAt(hour, complexMinutes, multipleDays.ToArray());
+                weeklyFormat = cron.ToString();
+            }
         
-            var cron = CronExpression.EverySpecificWeekDayAt(hour, complexMinutes, multipleDays.ToArray());
-            weeklyFormat = cron.ToString();
         }
 
-        public async Task generatemonthlyCron(MouseEventArgs args)
+        public async Task generateadvancedmonthlyCron(MouseEventArgs args)
         {
-       
+            if (monthlyFormat != "")
+                monthlyFormat = "";
             var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, hour, complexMinutes);
             monthlyFormat = cron;
 

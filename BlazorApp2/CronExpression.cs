@@ -27,6 +27,9 @@ namespace BlazorApp2
         {
             switch (ExpressionType)
             {
+                case CronExpressionType.EveryNWeek:
+                    _cronString = string.Format("0 0 12 {0} 1/1 ? *", _interval);
+                    break;
                 case CronExpressionType.EveryNSeconds:
                     _cronString = string.Format("0/{0} * * 1/1 * ? *", _interval);
                     break;
@@ -167,6 +170,12 @@ namespace BlazorApp2
             var ce = new CronExpression(minutesInteval, CronExpressionType.EveryNMinutes);
             return ce;
         }
+        public static CronExpression EveryNWeek(int weekInteval)
+        {
+            var ce = new CronExpression(weekInteval, CronExpressionType.EveryNWeek);
+            return ce;
+        }
+
 
         public static CronExpression EveryNHours(int hoursInterval)
         {

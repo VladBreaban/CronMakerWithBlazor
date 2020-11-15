@@ -18,5 +18,6 @@ namespace BlazorApp2
         EverySpecificSeqWeekDayEveryNMonthAt,
         EverySpecificDayOfMonthAt,
         EverySpecificSeqWeekDayOfMonthAt,
+        EveryNWeek,
     }
 }

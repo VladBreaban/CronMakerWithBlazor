@@ -262,21 +262,52 @@
                             <RadzenContent Container="main">
                                 <ChildContent>
                                     <div style="margin-bottom: 1rem" class="row">
-                                        <div class="col-md-2 align-items-center d-flex" style="margin-right:-140px; margin-left:-130px;">
-                                            <RadzenLabel Component="dayoftheMonth" Text="Day " style="font-weight: 500; font-size: medium;" />
+                                        <div class="col-md-1 align-items-center d-flex" style="margin-left:-130px; margin-right:-60px;">
+                                            <SfCheckBox @bind-Checked="@complexMonth" @onchange="@(()=> { complexMonth2=false;
+                                                                                                       isDisabled2 = false;
+                                                                                                       isDisabled1 = true;
+                                                                                                   })"  CssClass="e-primary"></SfCheckBox><br />
+                                        </div>
+                                        <div class="col-md-2 align-items-center d-flex" style="margin-right:-130px;">
+                                            <RadzenLabel Component="dayoftheMonth" Text="On day " style="font-weight: 500; font-size: medium;" />
                                         </div>
                                         <div class="col-md-1  align-items-center d-flex">
-                                            <SfDropDownList PopupWidth="80px" @bind-Value="day" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a day" DataSource="@days" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
+                                            <SfDropDownList Enabled="@isDisabled1" PopupWidth="80px" @bind-Value="day" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a day" DataSource="@days" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
 
                                             </SfDropDownList>
                                         </div>
                                         <div class="col-md-1 align-items-center d-flex">
                                             <RadzenLabel Component="minutes" Text=" of the month" style="font-weight: 500; font-size: medium; margin-right:-260px;" />
                                         </div>
-                                        <div class="col-md-1">
-                                            <SfDropDownList PopupWidth="80px" @bind-Value="month" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a month" DataSource="@months" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
+
+                                    </div>
+
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-1 align-items-center d-flex" style="margin-left:-130px; margin-right:-60px; ">
+                                            <SfCheckBox @bind-Checked="@complexMonth2" @onchange="@(()=> { complexMonth=false;
+                                                                                                        isDisabled1 = false;
+                                                                                                        isDisabled2 = true;
+                                                                                                    })" CssClass="e-primary"></SfCheckBox><br />
+                                        </div>
+                                        <div class="col-md-2 align-items-center d-flex" style="margin-right:-140px; margin-right:-140px;">
+                                            <RadzenLabel Component="dayoftheMonth" Text="On day" style="font-weight: 500; font-size: medium;" />
+                                        </div>
+                                        <div class="col-md-1  align-items-center d-flex">
+                                            <SfDropDownList Enabled="@isDisabled2" PopupWidth="80px" @bind-Value="day" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a day" DataSource="@days" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
 
                                             </SfDropDownList>
+                                        </div>
+                                        <div class="col-md-1 align-items-center d-flex">
+                                            <RadzenLabel Component="months" Text="every" style="font-weight: 500; font-size: medium; margin-right:-260px;" />
+                                        </div>
+                                        <div class="col-md-1 align-items-center d-flex" style="margin-left:-60px;">
+                                            <SfDropDownList Enabled="@isDisabled2" PopupWidth="80px" @bind-Value="month" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a month" DataSource="@months" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
+
+                                            </SfDropDownList>
+                                        </div>
+                                        <div class="col-md-1 align-items-center d-flex" style="margin-right:-140px;">
+                                            <RadzenLabel Component="text" Text="months" style="font-weight: 500; font-size: medium; margin-right:-260px;" />
                                         </div>
                                     </div>
 
@@ -284,7 +315,7 @@
                                         <div class="col-md-2 align-items-center d-flex" style="margin-right:-140px; margin-left:-130px;">
                                             <RadzenLabel Component="Start" Text="Starts at" style="font-weight: 500; font-size: medium;" />
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-1 align-items-center d-flex">
                                             <SfDropDownList PopupWidth="80px" @bind-Value="hour" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a hours" DataSource="@hoursArray" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
 
 
@@ -293,7 +324,7 @@
                                         <div class="col-md-2 align-items-center d-flex" style="margin-right:-200px;">
                                             <RadzenLabel Component="doua_pct" Text=" : " style="font-weight: 500; font-size: medium;" />
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-1 align-items-center d-flex">
                                             <SfDropDownList PopupWidth="80px" @bind-Value="complexMinutes" TValue="int" TItem="int" PopupHeight="230px" Placeholder="Select a hours" DataSource="@hoursMinutes" AllowFiltering=true FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains">
 
 
@@ -311,7 +342,7 @@
 
                                     <div class="row">
                                         <div class="col offset-sm-3">
-                                            <RadzenButton Disabled="false" ButtonStyle="ButtonStyle.Primary"  Text="Generate" Click="@generatemonthlyCron">
+                                            <RadzenButton Disabled="false" ButtonStyle="ButtonStyle.Primary" Text="Generate" Click="@generateadvancedmonthlyCron">
                                             </RadzenButton>
                                         </div>
                                     </div>
