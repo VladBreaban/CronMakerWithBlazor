@@ -55,9 +55,10 @@ namespace BlazorApp2.Pages
 
         public int[] minutesArray = new int[] { };
         public int minutes = 1;
-        public int hour = 12;
-        public int[] hoursArray = new int[] { };
-        public int[] hoursMinutes = new int[] { };
+        public string hour = "12";
+        public Months monthofTheYear = Months.January;
+        public string[] hoursArray = new string[] { };
+        public string[] hoursMinutes = new string[] { };
         public int[] simpleHours = new int[] {};
         public int[] days = new int[] { };
         public int day = 1;
@@ -66,8 +67,9 @@ namespace BlazorApp2.Pages
         public string monthlyFormat = "";
         public string hourlyFormat = "";
         public string weeklyFormat = "";
+        public string yearlyFormat = "";
         public int simpleHour = 1;
-        public int complexMinutes = 00;
+        public string complexMinutes = "00";
         public bool CheckBoxeveryday = true;
         public bool CheckBoxeveryweekday = false;
         public bool complexMonth = true;
@@ -79,17 +81,21 @@ namespace BlazorApp2.Pages
         public int month=1;
         public string[] dayoftheWeek = new string[] {"Monday", "Tuesday","Wednesday", "Thursday", "Friday","Saturday","Sunday"};
         IEnumerable<string> multipleDays = new string[] {  };
+        public Months[] monthsofTheYear = new Months[12] { Months.January,Months.February,Months.March,Months.April, Months.May, Months.June, Months.July, Months.August, Months.September,
+                                            Months.October, Months.November, Months.December};
+
         protected async System.Threading.Tasks.Task Load()
         {
 
 
-            //addSheets();
+            
             try
             {
-
+                int[] hoursminutes2 = new int[] { };
+                int[] hoursArray2 = new int[] { };
                 this.minutesArray = Enumerable.Range(1, 59).ToArray();
-                this.hoursArray= Enumerable.Range(00, 24).ToArray();
-                this.hoursMinutes = Enumerable.Range(00, 59).ToArray();
+                hoursArray2= Enumerable.Range(00, 24).ToArray();
+                hoursminutes2 = Enumerable.Range(00, 59).ToArray();
                 this.days = Enumerable.Range(1, 31).ToArray();
                 this.months = Enumerable.Range(1, 12).ToArray();
                 this.simpleHours = Enumerable.Range(1, 24).ToArray();
@@ -100,7 +106,14 @@ namespace BlazorApp2.Pages
                 forWeeklyCron.Add(new codedDecoded() { coded = "FRI", decoded = "Friday" });
                 forWeeklyCron.Add(new codedDecoded() { coded = "SAT", decoded = "Satruday" });
                 forWeeklyCron.Add(new codedDecoded() { coded = "SUN", decoded = "Sunday" });
-               
+            
+              this.hoursMinutes = hoursminutes2.Select(x => x.ToString()).ToArray();
+                this.hoursArray= hoursArray2.Select(x => x.ToString()).ToArray();
+                for (int i = 0; i < 9; i++)
+                {
+                    this.hoursMinutes[i] = string.Format("{0:00}", hoursminutes2[i]);
+                    this.hoursArray[i]= string.Format("{0:00}", hoursArray2[i]);
+                }
 
             }
             catch (SocketException e)
@@ -153,13 +166,13 @@ namespace BlazorApp2.Pages
             if(CheckBoxeveryday==true)
             {
               
-                var cron = CronExpression.EveryDayAt(hour,complexMinutes);
+                var cron = CronExpression.EveryDayAt(Int32.Parse(hour), Int32.Parse(complexMinutes));
                 dailyFormat = cron.ToString();
             }
             if (CheckBoxeveryweekday == true)
             {
 
-                var cron = CronExpression.EveryWeekDayAt(hour, complexMinutes);
+                var cron = CronExpression.EveryWeekDayAt(Int32.Parse(hour), Int32.Parse(complexMinutes));
                dailyFormat = cron.ToString();
             }
 
@@ -172,7 +185,7 @@ namespace BlazorApp2.Pages
 
             if (multipleDays.Count() != 0)
             {
-                var cron = CronExpression.EverySpecificWeekDayAt(hour, complexMinutes, multipleDays.ToArray());
+                var cron = CronExpression.EverySpecificWeekDayAt(Int32.Parse(hour), Int32.Parse(complexMinutes), multipleDays.ToArray());
                 weeklyFormat = cron.ToString();
             }
           
@@ -191,11 +204,18 @@ namespace BlazorApp2.Pages
             }
             else
             {
-                var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, hour, complexMinutes);
+                var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, Int32.Parse(hour), Int32.Parse(complexMinutes));
                 monthlyFormat = cron;
             }
            
 
+        }
+
+        public async Task generateaYearlyCron(MouseEventArgs args)
+        {
+            var cron = CronExpression.EverySpecificDayOfMonthAt(monthofTheYear, 1, 12, 0);
+            yearlyFormat = cron;
+           
         }
     }
 }
