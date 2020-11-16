@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Radzen;
 using RlvMailer;
 using Syncfusion.Blazor;
 namespace BlazorApp2
@@ -34,7 +35,8 @@ namespace BlazorApp2
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<RlvMailerService>();
-            services.AddSyncfusionBlazor();   
+            services.AddSyncfusionBlazor();
+            services.AddScoped<NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

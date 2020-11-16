@@ -14,6 +14,7 @@ using Qlik.Sense.Client;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization.Internal;
+using Radzen;
 
 namespace BlazorApp2.Pages
 {
@@ -79,6 +80,8 @@ namespace BlazorApp2.Pages
         public bool isDisabled1 = true;
         public bool isDisabled2 =false;
         public int month=1;
+        [Inject]
+        protected NotificationService NotificationService { get; set; }
         public string[] dayoftheWeek = new string[] {"Monday", "Tuesday","Wednesday", "Thursday", "Friday","Saturday","Sunday"};
         IEnumerable<string> multipleDays = new string[] {  };
         public Months[] monthsofTheYear = new Months[12] { Months.January,Months.February,Months.March,Months.April, Months.May, Months.June, Months.July, Months.August, Months.September,
@@ -150,6 +153,18 @@ namespace BlazorApp2.Pages
                 minuteFormat = "";
             var ce1 = CronExpression.EveryNMinutes(minutes);
             minuteFormat = ce1.ToString();
+            try
+            {
+
+                var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(ce1);
+
+            }
+            catch (Exception e)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+               minuteFormat = "";
+                throw;
+            }
         }
         public async Task generatehourlyCron(MouseEventArgs args)
           {
@@ -157,6 +172,19 @@ namespace BlazorApp2.Pages
 
             var ce1 = CronExpression.EveryNHours(simpleHour);
             hourlyFormat = ce1.ToString();
+          
+            try
+            {
+                
+                var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(ce1);
+               
+            } catch(Exception e)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                hourlyFormat = "";
+                throw;
+            }
+          
         }
        
         public async Task generatedailyCron(MouseEventArgs args)
@@ -168,12 +196,36 @@ namespace BlazorApp2.Pages
               
                 var cron = CronExpression.EveryDayAt(Int32.Parse(hour), Int32.Parse(complexMinutes));
                 dailyFormat = cron.ToString();
+                try
+                {
+
+                    var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(cron);
+
+                }
+                catch (Exception e)
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                    dailyFormat = "";
+                    throw;
+                }
             }
             if (CheckBoxeveryweekday == true)
             {
 
                 var cron = CronExpression.EveryWeekDayAt(Int32.Parse(hour), Int32.Parse(complexMinutes));
                dailyFormat = cron.ToString();
+                try
+                {
+
+                    var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(cron);
+
+                }
+                catch (Exception e)
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                    dailyFormat = "";
+                    throw;
+                }
             }
 
         }
@@ -187,6 +239,18 @@ namespace BlazorApp2.Pages
             {
                 var cron = CronExpression.EverySpecificWeekDayAt(Int32.Parse(hour), Int32.Parse(complexMinutes), multipleDays.ToArray());
                 weeklyFormat = cron.ToString();
+                try
+                {
+
+                    var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(cron);
+
+                }
+                catch (Exception e)
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                    weeklyFormat = "";
+                    throw;
+                }
             }
           
             
@@ -201,11 +265,35 @@ namespace BlazorApp2.Pages
             {
                 var cron = CronExpression.EveryNMonth(day);
                 monthlyFormat = cron;
+                try
+                {
+
+                    var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(cron);
+
+                }
+                catch (Exception e)
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                    monthlyFormat = "";
+                    throw;
+                }
             }
             else
             {
                 var cron = CronExpression.EverySpecificDayEveryNMonthAt(day, month, Int32.Parse(hour), Int32.Parse(complexMinutes));
                 monthlyFormat = cron;
+                try
+                {
+
+                    var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(cron);
+
+                }
+                catch (Exception e)
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                    monthlyFormat = "";
+                    throw;
+                }
             }
            
 
@@ -215,7 +303,19 @@ namespace BlazorApp2.Pages
         {
             var cron = CronExpression.EverySpecificDayOfMonthAt(monthofTheYear, 1, 12, 0);
             yearlyFormat = cron;
-           
+            try
+            {
+
+                var descriptCron = CronExpressionDescriptor.ExpressionDescriptor.GetDescription(cron);
+
+            }
+            catch (Exception e)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Invalid cron expression");
+                yearlyFormat = "";
+                throw;
+            }
+
         }
     }
 }
